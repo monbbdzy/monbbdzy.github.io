@@ -15,6 +15,7 @@ ul {
   gap: 20px;
   font-size: 20px;
   border-radius: 20px;
+  box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.2)
 }
 
 li {
@@ -49,6 +50,11 @@ body {
     background-color: #BFFFB3;
 }
 
+.violet-text 
+{
+    color: #9B26B6;
+    font-weight: bold;
+}
 
 /*Top image*/
 .header img {
@@ -58,6 +64,7 @@ body {
     display: block; /* Centers the image */
     margin: 0 auto; /* Centers it horizontally */
     align-self: center;
+     margin-left: 220px;
 }
 
 
@@ -98,6 +105,7 @@ body {
     flex-wrap: wrap;
     gap: 40px; /* Adds space between the items */
     justify-content: center; /* Centers the items */
+
 }
 
 .info-item {
@@ -143,11 +151,14 @@ body {
 
 .header-video {
     text-align: center;
-    margin: 10px;
+    margin: 0px;
     width: 100%;
     font-size: 60px;
     color: #572B00;
+    padding: 0px;
+    line-height: 0.01;
 }
+
 
 .video {
     flex: 2; /* Allows video to take up more space */
@@ -164,7 +175,18 @@ body {
     max-width: 50%; /* Ensures description is smaller */
     padding: 20px;
     text-align: left;
-    font-size: 25px;
+    font-size: 23px;
+    border: 2px;
+    border-radius: 40px; /* Adjust the value for more or less roundness */
+    padding: 20px;
+    background-color: #6aa84f ;
+    box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.2)
+}
+
+.video-description:hover {
+  background-color: #89c56f;
+  border-radius: 40px;
+  box-shadow: 4px 4px 20px 10px rgba(245, 255, 109, 0.37)
 }
 
 .video-description 
