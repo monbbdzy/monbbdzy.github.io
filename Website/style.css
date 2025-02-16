@@ -3,18 +3,19 @@
 /*Navigation Bar*/
 ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
   overflow: hidden;
   background-color: #6aa84f;
   position: fixed;
-  top: 0;
+  top: 0px;
   width:100%;
   display: flex;
   justify-content: center;
   gap: 20px;
   font-size: 20px;
   border-radius: 20px;
+  margin-left: 0px;
   box-shadow: 4px 4px 20px 10px rgba(0, 0, 0, 0.2)
 }
 
@@ -50,6 +51,10 @@ body {
     background-color: #BFFFB3;
 }
 
+.italic-text
+{
+    font-style: italic;
+}
 .violet-text 
 {
     color: #9B26B6;
