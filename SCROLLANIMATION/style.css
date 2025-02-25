@@ -1,0 +1,159 @@
+html{
+	/* Set height of the html page to 100% of the browser height */
+	height: 100%;
+	/* Hide horizontal scroll */
+	overflow-x: hidden;
+	font-family: 'Helvetica', sans-serif;
+}
+
+body{
+	/* Set height of the body to 100% -- separated out of html to allow scrollTo animation */
+	height: 100%;
+	margin: 0px;
+}
+
+/* 
+Navigation Bar 
+*/
+#nav{
+	/* Fix navigation bar at the top middle of the web page */
+    position: fixed;
+    /* calc() CSS function calculates numbers of different units */
+    left: calc(50% - 50px);
+    top: 20px;
+    /* Display nav bar on top of everything else */
+    z-index: 1;
+}
+
+.nav-btn{
+	width: 20px;
+    height: 20px;
+    /* Make square div into a circle */
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid black;
+    display: inline-block;
+    cursor: pointer;
+    /* transition changes in background-color */
+    transition: background-color 0.5s;
+}
+
+/* When a nav-btn is hovered on, set background-color to black */
+.nav-btn:hover{
+	background-color: black;
+}
+
+/* 
+Cat Div
+*/
+#cat-div{
+	/* Fix cat div in the bottom left corner of the web page */
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 300px;
+	text-align: center;
+}
+
+#cat{
+	width: 300px;
+	margin-top: 18px;
+}
+
+#cat-text{
+	color: white;
+	background-color: black;
+	font-size: 32px;
+}
+
+/* 
+Parallax: Mountain and Ocean sections;
+*/
+#aero, #ocean{
+	/* Set height of div to 100% */
+	height: 100%;
+	/* The bottom three background CSS settings create parallax effect */
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: center;
+}
+
+#aero{
+	/* Set background image of mountain section using url() function */
+	background-image: url('img/aero.jpeg');
+}
+
+#ocean{
+	/* Set background image of ocean section using url() function */
+	background-image: url('img/ocean.jpeg');
+}
+
+/* 
+Flower div inside Mountain section
+*/
+#fish2-div{
+    position: relative;
+    width: 150px;
+    text-align: center;
+    top: calc(100% - 300px);
+    left: calc(50% - 75px);
+}
+
+#fish2{
+	width: 100px;
+	margin-top: 25px;
+}
+
+#fish2-text{
+	color: black;
+}
+
+/* 
+Fish div inside Ocean section
+*/
+#question-div{
+    position: relative;
+    width: 200px;
+    text-align: center;
+    left: calc(50% - 90px);
+}
+
+#question-text{
+	color: black;
+	background: white;
+}
+
+#question{
+    width: 150px;
+    display: block;
+    margin: auto;
+}
+
+
+/* 
+Welcome section
+*/
+
+.container-1 {
+    display: flex;
+    justify-content: center;  /* Centers content horizontally */
+    align-items: center;      /* Centers content vertically */
+    width: 100%;  
+    max-width: 1600px;  
+    height: 500px;  
+    gap: 5px;
+}
+
+.box-1 {
+    display: flex; /* Ensures flex behavior */
+    justify-content: center; /* Centers image horizontally */
+    align-items: center; /* Centers image vertically */
+    width: 100%; /* Ensures it takes full available width */
+}
+
+.container-1 img {
+    max-width: 100%; /* Ensures image scales properly */
+    height: auto; /* Keeps aspect ratio */
+    display: block; /* Removes any extra spacing */
+}
+
