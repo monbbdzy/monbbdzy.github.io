@@ -1,0 +1,306 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Quicksand:wght@400;600&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+
+  /* Background section - not fixed */
+  .bg-section {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+  }
+
+  .bg-0 {
+    background-image: url("images/grass1.png");
+  }
+
+  .bg-1 {
+    background-image: url("images/grass2.png");
+  }
+
+  .bg-2 {
+    background-image: url("images/grass3.png");
+  }
+
+  /* Image container */
+  .image-container {
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 2;
+  }
+
+  /* Id card container */
+  .id-card{
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    right: -400px;  
+    transition: transform 0.3s ease;
+    z-index: 2;
+  }
+
+  .id-card:hover {
+    transform: scale(1.05);
+  }
+
+/* Notebook container */
+  .notebook{
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    left: -200px;  
+    transform:translateX(-200px) scale(1.1);
+    transition:transform 0.3s ease;   /* will animate both move & scale */
+    z-index:2;
+    
+  }
+  .notebook:hover {
+    transform:translateX(-200px) scale(1.2);
+  }
+
+  /* Earphones container */
+  .earphones {
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    left: 200px;
+    transition:transform 0.3s ease;
+    z-index:2;
+  }
+  .earphones:hover {
+    transform: scale(1.1);
+  }
+
+  /* social media icons */
+  .telegram {
+    margin: 2px;
+    position: relative;
+    cursor: pointer;
+    transform:scale(0.9);
+    top:-200px;
+    right: -518px;
+    transition:transform 0.3s ease;
+    z-index:2;
+  }
+  .telegram:hover {
+    transform: scale(0.97);
+  }
+
+  .linkedin {
+    margin: 2px;
+    position: relative;
+    cursor: pointer;
+    transform:scale(0.9);
+    top:200px;
+    right: -380px;
+    transition:transform 0.3s ease;
+    z-index:2;
+  }
+  .linkedin:hover {
+    transform: scale(0.97);
+  }
+
+  .instagram {
+    margin: 2px;
+    position: relative;
+    cursor: pointer;
+    transform:scale(0.9);
+    right: -180px;
+    transition:transform 0.3s ease;
+    z-index:2;
+  }
+  .instagram:hover {
+    transform: scale(0.97);
+  }
+
+  /* Tilts for images */
+  .tilt-left {
+    transform: rotate(-6deg);
+  }
+
+  .tilt-right {
+    transform: rotate(10deg);
+  }
+
+  /* Modal for larger image view */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
+  .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .image-container {
+      margin: 10px;
+    }
+    .static-image, .clickable-image {
+      width: 250px;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .static-image, .clickable-image {
+      width: 200px;
+      height: auto;
+    }
+  }
+
+  /* flip-book modal shares your .modal base, but flex-centers it */
+.flip-modal {
+  display: none;            /* hide by default */
+  align-items: center;
+  justify-content: center;
+}
+
+/* override .modal’s img rule so our .flipbook shows */
+.flip-modal .modal-content { display: none; }
+
+/* ensure close button sits on top */
+.flip-modal #closeFlip {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  font-size: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* size the flipbook if you need to override the 100% fullscreen */
+.flip-modal .flipbook {
+  width: 80vw;
+  height: 70vh;
+}
+
+.flipbook {
+  width: 1000px;
+  height: 600px;
+}
+
+.flipbook .hard {
+  background: #dbb22a !important;
+  color: #fff;
+  font-weight: bold;
+  border: none; 
+}
+
+.flipbook .hard.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* 1. Make the cover pane a clean, position-relative frame */
+.flipbook .hard.cover {
+  position: relative;   /* so the img can position absolutely inside it */
+  overflow: hidden;     /* cut off any parts of the image that overflow */
+  padding: 0;           /* remove any default padding */
+  border: none;         /* just in case */
+}
+
+/* 2. Stretch the cover image to fill its container */
+.flipbook .hard.cover img {
+  position: absolute;
+  top: 70px;
+  transform:translateX(-200px) scale(1.3);
+  left: 250px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* crop the image to fill without distortion */
+  object-position: center;
+  display: block;
+}
+
+.flipbook .hard small{
+font-style: italic;
+font-weight: lighter;
+opacity: 0.7;
+font-size: 14px;
+}
+
+.flipbook .page {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.11);
+  position: relative;
+  overflow: hidden;
+}
+
+.flipbook .page img{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  }
+
+  
+
+/* 3. Stick the page-number at the bottom center */
+.flipbook .page > div:not(.hard)small:last-child {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* your existing styles */
+  font-family: 'Patrick Hand', cursive;
+  font-size: 14px;
+  color: #555;
+}
+

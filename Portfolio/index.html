@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tilted Image Gallery</title>
+  <link rel="stylesheet" href="styles.css">
+  
+<!-- something with defer  -->
+ 
+</head>
+<body>
+  <!-- Section 1 id card, introduction page-->
+  <section class="section bg-section bg-0">
+    <div class="id-card">
+      <img src="images/id-card.png" alt="Clickable Image 1" class="clickable-image tilt-right" data-full="images/card.png">
+    </div> 
+  </section>
+
+  <!-- Section 2 Portfolio notebook and earphones -->
+  <section class="section bg-section bg-1">
+    <div class="notebook">
+      <img src="images/notebook1.png" alt="Clickable Image 2" class="clickable-img tilt-right" 
+           data-action="flipbook" 
+           data-title="My Pokemon Gallery"
+           data-subtitle="~ HankTheTank">
+    </div>
+    
+  </section>
+
+  <!-- Section 3 with scrollable background -->
+  <section class="section bg-section bg-2">
+    <div class="telegram">
+      <a href="https://t.me/jastm1"
+         target="_blank"
+         rel="noopener">
+        <img src="images/telegram.png"
+             alt="Telegram"
+             class="tilt-left">
+      </a>
+    </div>
+  
+    <div class="linkedin">
+      <a href="https://www.linkedin.com/in/nigina-rashidova-b67785335/"
+         target="_blank"
+         rel="noopener">
+        <img src="images/linkedin.png"
+             alt="LinkedIn"
+             class="tilt-left">
+      </a>
+    </div>
+  
+    <div class="instagram">
+      <a href="https://www.instagram.com/nigina_jastmi/"
+         target="_blank"
+         rel="noopener">
+        <img src="images/instagram.png"
+             alt="Instagram"
+             class="tilt-left">
+      </a>
+    </div>
+  </section>
+
+  <!-- Modal for displaying clicked images -->
+  <div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <!-- Flip-book Modal (hidden by default) -->
+  <div id="flipModal" class="modal flip-modal">
+    <button id="closeFlip" class="close">&times;</button>
+    <div class="flipbook">
+      <div class="hard cover">
+        <img src="images/notebook.png" alt="Flipbook Front Cover">
+      </div>
+
+      <div class="hard"></div>
+      
+      <div class="page">
+        <a href="https://monbbdzy.github.io/CV/"
+        target="_blank"
+        rel="noopener">
+        <img src="images/CV.png" alt="" />
+        </a>
+        <small>1</small>
+      </div>
+      
+      <div class="page" >
+        <a href="https://khatirak.github.io/comic/"
+        target="_blank"
+        rel="noopener">
+        <img src="images/comic.png" alt="" />
+        </a>
+        <small>2</small>
+      </div>
+      
+      <div class="page">
+        <img src="images/comic text.png" alt="" />
+        
+      </div>
+      
+      <div class="page">
+        <a href="https://asr637.github.io/audio/index.html"
+        target="_blank"
+        rel="noopener">
+        <img src="images/audio.png" alt="" />
+        </a>
+        <small>4</small>
+      </div>
+      
+      <div class="page">
+        <img src="images/audio text.png" alt="" />
+       
+      </div>
+      
+      <div class="page">
+        <a href="https://owusuisaac.github.io/Video_Project/"
+        target="_blank"
+        rel="noopener">
+        <img src="images/video.png" alt="" />
+        </a>
+        <small>6</small>
+      </div>
+
+      <div class="page">
+        <img src="images/video text.png" alt="" />
+      
+      </div>
+      
+      <div class="hard cover">
+        <img src="images/back.png" alt="Flipbook Back Cover">
+      </div>
+  
+    </div>
+  </div>
+
+  <script>
+    // Get the modal
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    
+    // Get all clickable images
+    const clickableImages = document.querySelectorAll(".clickable-image");
+    
+    // Add click event to all clickable images
+    clickableImages.forEach(img => {
+      img.addEventListener("click", function() {
+        modal.style.display = "flex";
+        modalImg.src = this.getAttribute("data-full");
+      });
+    });
+    
+    // Close the modal
+    function closeModal() {
+      modal.style.display = "none";
+    }
+    
+  </script>
+
+  <!-- flipbook dependencies -->
+  <script src="jquery.js"></script>
+  <script src="turn.js"></script>
+  <script>
+    // 1) Open flipModal when notebook is clicked
+    document
+      .querySelector(".notebook .clickable-img")
+      .addEventListener("click", function(e) {
+        e.stopPropagation();
+        document.getElementById("flipModal").style.display = "flex";
+        // initialize only once
+        if (!$('.flipbook').data('turned')) {
+          $('.flipbook')
+            .turn({ width: 1000, height: 600 })
+            .data('turned', true);
+        }
+      });
+
+    // 2) Close flipModal when the × is clicked
+    document
+      .getElementById("closeFlip")
+      .addEventListener("click", function() {
+        document.getElementById("flipModal").style.display = "none";
+      });
+
+  </script>
+
+</body>
+</html>
