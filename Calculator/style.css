@@ -1,0 +1,79 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Sofia", sans-serif;
+    box-sizing:border-box;
+}
+
+.container{
+    width:100%;
+    height: 100vh;
+    background-color: rgb(188, 239, 172);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator{
+    background-color: rgb(252, 165, 194);
+    padding: 25px;
+    border-radius: 30px;
+}
+
+.calculator form input{
+    border:0px;
+    outline:0px;
+    width: 60px;
+    height: 60px;
+    border-radius:25px;
+    box-shadow: -8px -8px 15px rgba(255, 255, 255, 0.13), 5px 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: rgb(245, 173, 197);
+    font-size:25px;
+    color:rgba(0, 0, 0, 0.619);
+    cursor: pointer;
+    margin: 10px;
+}
+
+.calculator form input:hover{
+    background-color: rgb(249, 203, 225);
+}
+
+form .display{
+    display:flex;
+    justify-content: flex-end;
+    margin: 20px 0px;
+}
+
+form .display input{
+    text-align: right;
+    flex: 1;
+    font-size: 30px;
+    box-shadow: none;
+    background-color: rgb(249, 203, 225);
+    padding:20px;
+}
+
+form input.equal{
+    width:145px;
+    background-color: rgb(248, 232, 140);
+}
+
+form input.equal:hover{
+    background-color:  rgb(247, 222, 80);
+}
+
+form input.spec{
+    background-color: rgb(248, 232, 140);
+}
+
+form input.spec:hover{
+    background-color:  rgb(247, 222, 80);
+}
+
+form input.a{
+    background-color: rgb(253, 194, 212);
+}
+
+form input.a:hover{
+    background-color:  rgb(251, 129, 165);
+}
