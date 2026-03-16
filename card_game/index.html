@@ -135,17 +135,6 @@
       justify-content: space-between;
       padding: 2rem 1.75rem 1.5rem;
       border: 1px solid var(--color-card-border);
-
-      /* ----------------------------------------------------------
-         🖼️  CARD IMAGE
-         To use an image on the card faces, uncomment and edit:
-           background-image: url('YOUR_CARD_IMAGE.jpg');
-           background-size: cover;
-           background-position: center;
-         Then add a semi-transparent overlay for readability, e.g.:
-           background-color: rgba(255,255,255,0.85);
-         Or set background-blend-mode: overlay;
-         ---------------------------------------------------------- */
     }
 
     .face-front {
@@ -192,6 +181,12 @@
     .face-front .card-text { color: var(--color-question-text); }
     .face-back  .card-text { color: var(--color-answer-text); font-style: italic; font-size: 1.05rem; }
 
+    .card-img {
+      width: 160px;       /* adjust to taste */
+      height: 160px;
+      object-fit: contain;
+      border-radius: 8px;
+}
     /* Flip button at the bottom of the card */
     .flip-btn {
       width: 100%;
@@ -260,7 +255,8 @@
         <!-- FRONT FACE (Question) -->
         <div class="face face-front">
           <span class="tag tag-question">Вопрос</span>
-          <p class="card-text" id="question-text"></p>
+          <img id="question-img" src="" alt="" class="card-img" />
+          <p class="card-text" id="question-text"></p>  <!-- ← this line was missing -->
           <button class="flip-btn" id="flip-btn">Перевернуть</button>
         </div>
 
@@ -291,7 +287,8 @@
     const cards = [
       {
         q: "Слушать",
-        a: "Я слушаю\n Ты слушаешь\nОн(она) слушает\nМы слушаем\nВы слушаете\nОни слушают"
+        a: "Я слушаю\n Ты слушаешь\nОн(она) слушает\nМы слушаем\nВы слушаете\nОни слушают",
+        img: "images/listening.jpeg"
       },
       {
         q: "Отвечать",
@@ -300,7 +297,8 @@
         Он(она) отвечает
         Мы отвечаем
         Вы отвечаете
-        Они отвечают`
+        Они отвечают`,
+        img: "images/replying.jpeg"
       },
       {
         q: "Рассказывать",
@@ -309,7 +307,8 @@
         Он(она) рассказывает
         Мы рассказываем
         Вы рассказываете
-        Они рассказывают`
+        Они рассказывают`,
+        img: "images/telling.jpeg"
       },
       {
         q: "Понимать",
@@ -319,7 +318,8 @@
         Мы понимаем
         Вы понимаете
         Они понимают
-        `
+        `,
+        img: "images/understanding.jpeg"
       },
       {
         q: "Делать",
@@ -328,7 +328,8 @@
         Он(она) делает
         Мы делаем
         Вы делаете
-        Они делают`
+        Они делают`,
+        img: "images/doing.jpeg"
       },
     ];
 
@@ -363,8 +364,9 @@
         : 'none';
 
       questionEl.textContent = cards[current].q;
+      document.getElementById('question-img').src = cards[current].img;
       const lines = cards[current].a.split('\n').filter(l => l.trim() !== '');
-answerEl.innerHTML = '<ul>' + lines.map(l => `<li>${l.trim()}</li>`).join('') + '</ul>';
+      answerEl.innerHTML = '<ul>' + lines.map(l => `<li>${l.trim()}</li>`).join('') + '</ul>';
       counterEl.textContent  = 'Карта ' + (current + 1) + ' из ' + cards.length;
 
       cardEl.classList.toggle('flipped', flipped);
