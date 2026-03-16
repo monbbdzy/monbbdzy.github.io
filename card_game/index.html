@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcard Game</title>
+
+  <!-- ============================================================
+       FONTS — replace or remove as you like
+       ============================================================ -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+
+    /* ============================================================
+       🎨  CUSTOMIZE YOUR COLORS HERE
+       ============================================================ */
+    :root {
+      --color-page-bg:        #a2d2ff8b;   /* page background (used if no bg image) */
+
+      --color-card-front-bg:  #ffffff;   /* front face of card */
+      --color-card-back-bg:   #f0f4ff;   /* back face of card  */
+      --color-card-border:    rgba(0,0,0,0.12);
+
+      --color-question-text:  #1a1a2e;   /* question text on front */
+      --color-answer-text:    #1a1a2e;   /* answer text on back   */
+
+      --color-tag-question:   #888;      /* small "Question" label */
+      --color-tag-answer:     #3a7d44;   /* small "Answer" label   */
+
+      --color-btn-text:       #555;
+      --color-btn-border:     rgba(0,0,0,0.18);
+      --color-btn-hover-bg:   rgba(0,0,0,0.06);
+
+      --color-nav-btn-text:   #ffffff;
+      --color-nav-btn-border: rgb(255, 255, 255);
+      --color-nav-btn-hover:  rgb(255, 255, 255);
+
+      --color-counter-text:   rgb(255, 255, 255);
+
+      --color-dot-inactive:   rgba(255,255,255,0.25);
+      --color-dot-active:     rgba(255,255,255,0.85);
+
+      --font-display: 'Lora', serif;     /* card text font   */
+      --font-mono:    'DM Mono', monospace; /* labels & counter */
+    }
+
+
+    /* ============================================================
+       🖼️  BACKGROUND IMAGE
+       Replace the url() value below with your own image path.
+       Example:  url('my-background.jpg')
+       ============================================================ */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+
+      background-color: var(--color-page-bg);          /* fallback color */
+      background-image: url(images/background.jpg); /*← replace this */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* Optional dark overlay on top of background image.
+       Set opacity to 0 to disable. */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35); /* darken bg image slightly */
+      pointer-events: none;
+      z-index: 0;
+    }
+
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .game {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 2.5rem;
+    }
+
+    .counter {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-counter-text);
+      margin-bottom: 1.5rem;
+    }
+
+
+    /* ============================================================
+       CARD  (3-D flip)
+       ============================================================ */
+    .scene {
+      width: 320px;
+      height: 380px;
+      perspective: 1000px;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 1.75rem 1.5rem;
+      border: 1px solid var(--color-card-border);
+
+      /* ----------------------------------------------------------
+         🖼️  CARD IMAGE
+         To use an image on the card faces, uncomment and edit:
+           background-image: url('YOUR_CARD_IMAGE.jpg');
+           background-size: cover;
+           background-position: center;
+         Then add a semi-transparent overlay for readability, e.g.:
+           background-color: rgba(255,255,255,0.85);
+         Or set background-blend-mode: overlay;
+         ---------------------------------------------------------- */
+    }
+
+    .face-front {
+      background-color: var(--color-card-front-bg);
+    }
+
+    .face-back {
+      background-color: var(--color-card-back-bg);
+      transform: rotateY(180deg);
+    }
+
+    /* Small label at top of card */
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+    .tag-question { color: var(--color-tag-question); }
+    .tag-answer   { color: var(--color-tag-answer);   }
+
+    /* Main text on card */
+    .card-text {
+      font-size: 1.2rem;
+      line-height: 1.65;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 1rem 0;
+      
+    }
+
+    .card-text ul {
+      padding-left: 1.2rem;
+      margin: 0;
+      text-align: left;
+    }
+
+    .card-text li {
+      margin: 4px 0;
+      }   
+    .face-front .card-text { color: var(--color-question-text); }
+    .face-back  .card-text { color: var(--color-answer-text); font-style: italic; font-size: 1.05rem; }
+
+    /* Flip button at the bottom of the card */
+    .flip-btn {
+      width: 100%;
+      padding: 0.65rem;
+      border-radius: 8px;
+      border: 1px solid var(--color-btn-border);
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-btn-text);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .flip-btn:hover  { background: var(--color-btn-hover-bg); }
+    .flip-btn:active { transform: scale(0.98); }
+
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--color-nav-btn-border);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--color-nav-btn-text);
+      font-size: 18px;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: var(--color-nav-btn-hover); }
+    .nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+    /* Dot indicators */
+    .dots { display: flex; gap: 6px; }
+    .dot  { width: 6px; height: 6px; border-radius: 50%; transition: background 0.2s; }
+    .dot          { background: var(--color-dot-inactive); }
+    .dot.active   { background: var(--color-dot-active);   }
+
+    .answer-element { 
+  white-space: pre-line; 
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="game">
+    <div class="counter" id="counter">Карта 1 из 10</div>
+
+    <div class="scene">
+      <div class="card" id="card">
+
+        <!-- FRONT FACE (Question) -->
+        <div class="face face-front">
+          <span class="tag tag-question">Вопрос</span>
+          <p class="card-text" id="question-text"></p>
+          <button class="flip-btn" id="flip-btn">Перевернуть</button>
+        </div>
+
+        <!-- BACK FACE (Answer) -->
+        <div class="face face-back">
+          <span class="tag tag-answer">Ответ</span>
+          <p class="card-text" id="answer-text"></p>
+          <button class="flip-btn" id="flip-back-btn">Обратно</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="nav-btn" id="prev-btn" disabled>&#8592;</button>
+      <div class="dots" id="dots"></div>
+      <button class="nav-btn" id="next-btn">&#8594;</button>
+    </div>
+  </div>
+
+
+  <script>
+
+    /* ============================================================
+       📝  YOUR FLASHCARDS  —  edit questions & answers here
+       Add or remove objects from this array (keep the same format).
+       ============================================================ */
+    const cards = [
+      {
+        q: "Слушать",
+        a: "Я слушаю\n Ты слушаешь\nОн(она) слушает\nМы слушаем\nВы слушаете\nОни слушают"
+      },
+      {
+        q: "Отвечать",
+        a: `Я отвечаю
+        Ты отвечаешь
+        Он(она) отвечает
+        Мы отвечаем
+        Вы отвечаете
+        Они отвечают`
+      },
+      {
+        q: "Рассказывать",
+        a: `Я рассказываю
+        Ты рассказываешь 
+        Он(она) рассказывает
+        Мы рассказываем
+        Вы рассказываете
+        Они рассказывают`
+      },
+      {
+        q: "Понимать",
+        a: `Я понимаю
+        Ты понимаешь
+        Он(она) понимает
+        Мы понимаем
+        Вы понимаете
+        Они понимают
+        `
+      },
+      {
+        q: "Делать",
+        a: `Я делаю
+        Ты делаешь
+        Он(она) делает
+        Мы делаем
+        Вы делаете
+        Они делают`
+      },
+    ];
+
+    /* ============================================================
+       GAME LOGIC  —  no need to edit below this line
+       ============================================================ */
+    let current = 0;
+    let flipped  = false;
+
+    const cardEl      = document.getElementById('card');
+    const questionEl  = document.getElementById('question-text');
+    const answerEl    = document.getElementById('answer-text');
+    const counterEl   = document.getElementById('counter');
+    const prevBtn     = document.getElementById('prev-btn');
+    const nextBtn     = document.getElementById('next-btn');
+    const dotsEl      = document.getElementById('dots');
+    const flipBtn     = document.getElementById('flip-btn');
+    const flipBackBtn = document.getElementById('flip-back-btn');
+
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      cards.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i === current ? ' active' : '');
+        dotsEl.appendChild(d);
+      });
+    }
+
+    function render(animate) {
+      cardEl.style.transition = animate
+        ? 'transform 0.55s cubic-bezier(0.45,0.05,0.55,0.95)'
+        : 'none';
+
+      questionEl.textContent = cards[current].q;
+      const lines = cards[current].a.split('\n').filter(l => l.trim() !== '');
+answerEl.innerHTML = '<ul>' + lines.map(l => `<li>${l.trim()}</li>`).join('') + '</ul>';
+      counterEl.textContent  = 'Карта ' + (current + 1) + ' из ' + cards.length;
+
+      cardEl.classList.toggle('flipped', flipped);
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === cards.length - 1;
+      buildDots();
+    }
+
+    function goTo(idx) {
+      flipped  = false;
+      current  = idx;
+      render(true);
+    }
+
+    flipBtn.addEventListener('click',     () => { flipped = true;  render(true); });
+    flipBackBtn.addEventListener('click', () => { flipped = false; render(true); });
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    render(false);
+
+  </script>
+</body>
+</html>
